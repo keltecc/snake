@@ -1,5 +1,6 @@
 package snake;
 
-public class Game {
-
+public class Game 
+{
+	private Snake snake;
 }

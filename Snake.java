@@ -4,13 +4,13 @@ import java.util.LinkedList;
 
 public class Snake 
 {	
-	private int lengthAdjustCounter;
+	private int lengthQueue;
 	private LinkedList<Point> body;
 	private Point direction;
 	
 	public Snake(Point location, Point direction)
 	{
-		lengthAdjustCounter = 0;
+		lengthQueue = 0;
 		body = new LinkedList<Point>();
 		
 		body.add(location);
@@ -27,15 +27,15 @@ public class Snake
 		this.direction = direction;
 	}
 	
-	public void increaseLength(int length)
+	public void adjustLength(int length)
 	{
-		lengthAdjustCounter += length;
-	}
-	
-	public void decreaseLength(int length)
-	{
-		while (length-- > 0)
+		while (length < 0)
+		{
 			body.removeLast();
+			length++;
+		}
+		
+		lengthQueue += length;
 	}
 	
 	public void makeStep()
@@ -44,10 +44,10 @@ public class Snake
 		head.add(direction);
 		body.addFirst(head);
 		
-		if (lengthAdjustCounter > 0)
+		if (lengthQueue > 0)
 		{
 			body.removeLast();
-			lengthAdjustCounter--;
+			lengthQueue--;
 		}
 	}
 }
