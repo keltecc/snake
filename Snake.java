@@ -45,9 +45,8 @@ public class Snake
 		body.addFirst(head);
 		
 		if (lengthQueue > 0)
-		{
-			body.removeLast();
 			lengthQueue--;
-		}
+		else
+			body.removeLast();
 	}
 }
