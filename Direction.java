@@ -7,7 +7,7 @@ public class Direction
     public static final Point UP = new Point(0, 1);
     public static final Point DOWN = new Point(0, -1);
     
-    public static Point Parse(String name)
+    public static Point parse(String name)
     {
         try 
         {

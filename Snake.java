@@ -6,7 +6,8 @@ public class Snake
 {    
     private int lengthQueue;
     private LinkedList<Point> body;
-    private Point direction;
+    
+    public Point direction;
     
     public Snake(Point location, Point direction)
     {
@@ -22,9 +23,9 @@ public class Snake
         return body.size();
     }
     
-    public void setDirection(Point direction)
+    public Point getHead()
     {
-        this.direction = direction;
+    	return body.peekFirst();
     }
     
     public void adjustLength(int length)

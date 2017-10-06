@@ -1,15 +1,17 @@
 package snake;
 
+import java.util.HashSet;
+
 public class Level 
 {
-    private Snake snake;
-    private int finalLength;
-    private Field field;
+	public int target;
+    public Snake snake;
+    public GameMap map;
     
-    public Level(Field field, Snake snake, int finalLength)
+    public Level(GameMap map, Snake snake, int target)
     {
-        this.field = field;
+        this.map = map;
         this.snake = snake;
-        this.finalLength = finalLength;
+        this.target = target;
     }
 }
