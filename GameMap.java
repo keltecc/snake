@@ -2,23 +2,23 @@ package snake;
 
 public class GameMap 
 {
-    private MapObject[][] gameMap;
+    private boolean[][] gameMap;
     
     public GameMap(int width, int height)
     {
-        gameMap = new MapObject[width][];
-        for (int index = 0; index < gameMap.length; index++)
+        gameMap = new boolean[width][];
+        for (int x = 0; x < gameMap.length; x++)
         {
-            gameMap[index] = new MapObject[height];
+            gameMap[x] = new boolean[height];
         }
     }
     
-    public void set(int x, int y, MapObject object)
+    public void set(int x, int y, boolean isWall)
     {
-        gameMap[x][y] = object;
+        gameMap[x][y] = isWall;
     }
     
-    public MapObject get(int x, int y)
+    public boolean get(int x, int y)
     {
         return gameMap[x][y];
     }

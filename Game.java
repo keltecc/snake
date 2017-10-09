@@ -1,16 +1,11 @@
 package snake;
 
-import java.io.FileNotFoundException;
-
 public class Game 
 {    
-	private Level level;
-	
-	public boolean isOver;
+	public Level level;
 	
 	public Game(int levelNumber) throws Exception
 	{
-		isOver = false;
 		level = LevelParser.parse(levelNumber);
 	}
 	
@@ -23,8 +18,5 @@ public class Game
 	public void tick()
 	{
 		level.snake.makeStep();
-		Point snakeHead = level.snake.getHead();
-		if (level.map.get(snakeHead.x, snakeHead.y) == MapObject.WALL)
-			isOver = true;
 	}
 }

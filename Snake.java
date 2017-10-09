@@ -18,24 +18,20 @@ public class Snake
         this.direction = direction;
     }
     
-    public int getLength()
+    public int length()
     {
         return body.size();
     }
     
-    public Point getHead()
+    public Point getPart(int number)
     {
-    	return body.peekFirst();
+    	if (number >= 0 && number < length())
+    		return body.get(number);
+    	return null;
     }
     
     public void adjustLength(int length)
     {
-        while (length < 0)
-        {
-            body.removeLast();
-            length++;
-        }
-        
         lengthQueue += length;
     }
     

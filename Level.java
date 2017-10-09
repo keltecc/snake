@@ -4,7 +4,7 @@ import java.util.HashSet;
 
 public class Level 
 {
-	public int target;
+	public int targetLength;
     public Snake snake;
     public GameMap map;
     
@@ -12,6 +12,6 @@ public class Level
     {
         this.map = map;
         this.snake = snake;
-        this.target = target;
+        this.targetLength = target;
     }
 }
