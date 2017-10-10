@@ -7,12 +7,12 @@ import java.util.List;
 
 public class LevelParser 
 {
-	private static final String MAPS_PATH = "bin\\snake\\maps";
+	private static final Path MAPS_PATH = Paths.get("bin", "snake", "maps");
 	private static final Character WALL_SYMBOL = 'X';
 	
     private static List<String> readMap(int number) throws Exception
     {
-    	Path path = Paths.get(MAPS_PATH, Integer.toString(number));
+    	Path path = Paths.get(MAPS_PATH.toString(), Integer.toString(number));
     	if (Files.exists(path))
     		return Files.readAllLines(path);
     	else
@@ -29,7 +29,7 @@ public class LevelParser
             for (int y = 0; y < map.height(); y++)
             {
             	char symbol = lines.get(y + 1).charAt(x);
-                map.set(x, y, symbol == WALL_SYMBOL);
+                map.setTerrain(x, y, symbol == WALL_SYMBOL);
             }
         }
         Point direction = Direction.parse(lines.get(lines.size() - 3));

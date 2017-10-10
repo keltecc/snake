@@ -1,7 +1,5 @@
 package snake;
 
-import java.util.HashSet;
-
 public class Level 
 {
 	public int targetLength;

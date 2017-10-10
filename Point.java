@@ -19,6 +19,13 @@ public class Point
     			&& y == ((Point)point).y;
     }
     
+    @Override
+    public int hashCode()
+    {
+    	int half = Integer.MAX_VALUE / 2;
+    	return x % half + y % half;
+    }
+    
     public Point clone()
     {
         return new Point(this.x, this.y);
