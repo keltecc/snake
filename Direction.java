@@ -15,7 +15,7 @@ public class Direction
         }
         catch (NoSuchFieldException ex)
         {
-        	throw new Exception("Wrong direction name \"" + name + "\"");
+            throw new Exception("Wrong direction name \"" + name + "\"");
         }
     }
 }

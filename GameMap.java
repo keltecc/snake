@@ -2,13 +2,13 @@ package snake;
 
 public class GameMap 
 {
-	private Food[][] meal;
+    private Food[][] meal;
     private boolean[][] walls;
     
     public GameMap(int width, int height)
     {
-    	meal = new Food[width][];
-    	walls = new boolean[width][];
+        meal = new Food[width][];
+        walls = new boolean[width][];
         
         for (int x = 0; x < width; x++)
         {
@@ -29,21 +29,21 @@ public class GameMap
     
     public void setTerrain(int x, int y, boolean isWall)
     {
-    	walls[x][y] = isWall;
+        walls[x][y] = isWall;
     }
     
     public boolean getTerrain(int x, int y) 
     {
-    	return walls[x][y];
+        return walls[x][y];
     }
     
     public void setFood(int x, int y, Food food)
     {
-    	meal[x][y] = food;
+        meal[x][y] = food;
     }
     
     public Food getFood(int x, int y)
     {
-    	return meal[x][y];
+        return meal[x][y];
     }
 }

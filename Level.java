@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Level 
 {
-	public int targetLength;
+    public int targetLength;
     public Snake snake;
     public GameMap map;
     

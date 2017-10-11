@@ -19,10 +19,10 @@ public class Snake
         
         while (--length > 0)
         {
-        	body.addLast(Point.getSum(
-        		body.peekLast().clone(), 
-        		Point.getMultiplication(direction, -1)
-        	));
+            body.addLast(Point.getSum(
+                body.peekLast().clone(), 
+                Point.getMultiplication(direction, -1)
+            ));
         }
     }
     
@@ -33,19 +33,19 @@ public class Snake
     
     public Point[] getTrace()
     {
-    	Point[] trace = new Point[getLength()];
-    	body.toArray(trace);
-    	return trace;
+        Point[] trace = new Point[getLength()];
+        body.toArray(trace);
+        return trace;
     }
     
     public void adjustLength(int length)
     {
-    	while (length < 0)
-    	{
-    		body.removeLast();
-    		length++;
-    	}
-    	
+        while (length < 0)
+        {
+            body.removeLast();
+            length++;
+        }
+        
         lengthQueue += length;
     }
     
