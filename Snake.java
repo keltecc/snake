@@ -9,29 +9,43 @@ public class Snake
     
     public Point direction;
     
-    public Snake(Point location, Point direction)
+    public Snake(Point location, Point direction, int length)
     {
         lengthQueue = 0;
         body = new LinkedList<Point>();
         
         body.add(location);
         this.direction = direction;
+        
+        while (--length > 0)
+        {
+        	body.addLast(Point.getSum(
+        		body.peekLast().clone(), 
+        		Point.getMultiplication(direction, -1)
+        	));
+        }
     }
     
-    public int length()
+    public int getLength()
     {
         return body.size();
     }
     
-    public Point getPart(int number)
+    public Point[] getTrace()
     {
-    	if (number >= 0 && number < length())
-    		return body.get(number);
-    	return null;
+    	Point[] trace = new Point[getLength()];
+    	body.toArray(trace);
+    	return trace;
     }
     
     public void adjustLength(int length)
     {
+    	while (length < 0)
+    	{
+    		body.removeLast();
+    		length++;
+    	}
+    	
         lengthQueue += length;
     }
     

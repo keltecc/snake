@@ -9,27 +9,18 @@ public class CUI
 	{
 		Game game = new Game();
 		game.loadLevel(1);
-		while (!game.isOver)
+		while (game.result == GameResult.NONE)
 		{
-			String[][] map = renderMap(game.level.map);
-			addSnakeToMap(map, game.level.snake);
-			addFoodToMap(map, game.level.map.getAllFood());
-			printMap(map);
+			printView(renderView(game.level.map, game.level.snake));
 			String command = readLine();
-			switch (command)
-			{
-				case "":
-					break;
-				default:
-					game.changeDirection(Direction.parse(command));
-					break;
-			}
+			if (!command.equals(""))
+				game.changeDirection(Direction.parse(command));
 			game.tick();
 		}
-		System.out.println("GAME OVER!");
+		System.out.println(game.result.toString());
 	}
 	
-	public static String readLine()
+	private static String readLine()
 	{
 		try
 		{
@@ -43,38 +34,35 @@ public class CUI
 		}
 	}
 	
-	public static String[][] renderMap(GameMap map)
+	private static String[][] renderView(GameMap map, Snake snake)
 	{
-		String[][] characters = new String[map.width()][];
-		for (int x = 0; x < characters.length; x++)
+		String[][] characters = new String[map.height()][];
+		for (int y = 0; y < characters.length; y++)
 		{
-			characters[x] = new String[map.height()];
-			for (int y = 0; y < characters[x].length; y++)
-				characters[x][y] = map.getTerrain(x, y) ? "X" : ".";
+			characters[y] = new String[map.width()];
+			for (int x = 0; x < characters[y].length; x++)
+			{
+				Food food = map.getFood(x, y);
+				if (food instanceof Apple)
+					characters[y][x] = "A";
+				else if (food instanceof Cherry)
+					characters[y][x] = "C";
+				else if (food == null)
+					characters[y][x] = map.getTerrain(x, y) ? "X" : ".";
+				else
+					characters[y][x] = "?";
+			}
 		}
+		for (Point part : snake.getTrace())
+			characters[part.y][part.x] = "S";
 		return characters;
 	}
 	
-	public static void addSnakeToMap(String[][] map, Snake snake)
+	private static void printView(String[][] view)
 	{
-		for (int index = 0; index < snake.length(); index++)
-		{
-			Point part = snake.getPart(index);
-			map[part.y][part.x] = "S";
-		}
-	}
-	
-	public static void addFoodToMap(String[][] map, EatingObject[] objects)
-	{
-		for (EatingObject object : objects)
-			map[object.getLocation().x][object.getLocation().y] = "A";
-	}
-	
-	public static void printMap(String[][] map)
-	{
-		String[] lines = new String[map.length];
+		String[] lines = new String[view.length];
 		for (int index = 0; index < lines.length; index++)
-			lines[index] = String.join("", map[index]);
+			lines[index] = String.join("", view[index]);
 		String text = String.join("\n", lines);
 		System.out.println(text);
 	}

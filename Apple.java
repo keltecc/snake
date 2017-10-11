@@ -1,23 +1,11 @@
 package snake;
 
-public class Apple implements EatingObject
+public class Apple implements Food
 {
-	private Point location;
+	private static final int COST = 1;
 	
-	public Apple(Point location)
+	public int getCost()
 	{
-		this.location = location;
-	}
-	
-	public EatingResult interact(Level level)
-	{
-		level.snake.adjustLength(1);
-		level.map.removeFood(this);
-		return new EatingResult(false);
-	}
-	
-	public Point getLocation()
-	{
-		return location.clone();
+		return COST;
 	}
 }

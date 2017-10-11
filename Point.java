@@ -22,7 +22,7 @@ public class Point
     @Override
     public int hashCode()
     {
-    	int half = Integer.MAX_VALUE / 2;
+    	final int half = Integer.MAX_VALUE / 2;
     	return x % half + y % half;
     }
     
@@ -35,6 +35,12 @@ public class Point
     {
         this.x += point.x;
         this.y += point.y;
+    }
+    
+    public void multiply(int value)
+    {
+    	this.x *= value;
+    	this.y *= value;
     }
     
     public static Point parse(String text, String delimeter)
@@ -53,5 +59,15 @@ public class Point
     public static double getDistance(Point p1, Point p2)
     {
     	return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+    }
+    
+    public static Point getSum(Point p1, Point p2)
+    {
+    	return new Point(p1.x + p2.x,p1.y + p2.y);
+    }
+    
+    public static Point getMultiplication(Point point, int value)
+    {
+    	return new Point(point.x * value, point.y * value);
     }
 }

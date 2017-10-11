@@ -1,4 +1,8 @@
-10x10
+direction=RIGHT
+length=3
+head=3,1
+size=10x10
+target=10
 XXXXXXXXXX
 X........X
 X........X
@@ -9,6 +13,4 @@ X........X
 X........X
 X........X
 XXXXXXXXXX
-RIGHT
-5
-1,1
+food=Apple,timeout=5,count=2
