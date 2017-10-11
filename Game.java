@@ -1,24 +1,24 @@
 package snake;
 
 public class Game 
-{    
-    private static final int LEVELS_COUNT = 2;
-    
-    private int levelNumber;
+{   
+	private int levelNumber;
+    private LevelProvider provider;
     
     public Level level;
     public GameResult result;
     
-    public Game()
+    public Game(LevelProvider provider)
     {
         level = null;
         result = GameResult.NONE;
+        this.provider = provider;
     }
     
     public void loadLevel(int number) throws Exception
     {
         levelNumber = number;
-        level = LevelLoader.load(levelNumber);
+        level = provider.load(levelNumber);
     }
     
     public void tick() throws Exception
@@ -28,7 +28,7 @@ public class Game
 
         if (level.snake.getLength() == level.targetLength)
         {
-            if (levelNumber < LEVELS_COUNT)
+            if (levelNumber < provider.getLevelsCount())
                 loadLevel(++levelNumber);
             else
                 result = GameResult.GAME_COMPLETED;

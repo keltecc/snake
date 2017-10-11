@@ -7,7 +7,7 @@ public class CUI
 {
     public static void main(String[] args) throws Exception
     {
-        Game game = new Game();
+        Game game = new Game(new LevelReader());
         game.loadLevel(1);
         while (game.result == GameResult.NONE)
         {

@@ -6,11 +6,16 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 
-public class LevelLoader 
+public class LevelReader implements LevelProvider 
 {
     private static final Path LEVELS_PATH = Paths.get("bin", "snake", "levels");
     
-    public static Level load(int number) throws Exception
+    public int getLevelsCount() throws Exception
+    {
+    	return (int)Files.list(LEVELS_PATH).count();
+    }
+    
+    public Level load(int number) throws Exception
     {
         List<String> lines = readLines(number);
         LevelBuilder builder = new LevelBuilder();
