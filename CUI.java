@@ -14,7 +14,16 @@ public class CUI
             printView(renderView(game.level.map, game.level.snake));
             String command = readLine();
             if (!command.equals(""))
-                game.changeDirection(Direction.parse(command));
+            {
+            	try
+	            {
+            		game.changeDirection(Direction.parse(command.toUpperCase()));           		
+	            }
+            	catch (Exception e)
+            	{
+            		System.out.println("Wrong command \"" + command + "\"");
+            	}
+            }
             game.tick();
         }
         System.out.println(game.result.toString());
@@ -37,10 +46,10 @@ public class CUI
     private static String[][] renderView(GameMap map, Snake snake)
     {
         String[][] characters = new String[map.height()][];
-        for (int y = 0; y < characters.length; y++)
+        for (int y = 0; y < map.height(); y++)
         {
             characters[y] = new String[map.width()];
-            for (int x = 0; x < characters[y].length; x++)
+            for (int x = 0; x < map.width(); x++)
             {
                 Food food = map.getFood(x, y);
                 if (food instanceof Apple)
