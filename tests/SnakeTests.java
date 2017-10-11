@@ -80,7 +80,7 @@ public class SnakeTests
       for (int i = 0; i < ITERATIONS_COUNT; i++)
       {
          int previous = snake.getLength();
-         int next = random.nextInt(1000);
+         int next = random.nextInt(999) + 1;
          int value = next - previous;
          snake.adjustLength(value);
          if (value > 0)

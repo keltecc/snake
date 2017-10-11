@@ -22,8 +22,8 @@ public class GameMapTests
    {
       for (int i = 0; i < ITERATION_COUNT; i++)
       {
-         int width = random.nextInt(1000);
-         int height = random.nextInt(1000);
+         int width = random.nextInt(999) + 1;
+         int height = random.nextInt(999) + 1;
          GameMap map = new GameMap(width, height);
          assert width == map.width();
          assert height == map.height();
