@@ -9,6 +9,13 @@ import java.util.List;
 public class LevelReader implements LevelProvider 
 {
     private static final Path LEVELS_PATH = Paths.get("bin", "snake", "levels");
+	
+    private LevelBuilder builder;
+    
+    public LevelReader()
+    {
+    	builder = new LevelBuilder();
+    }
     
     public int getLevelsCount() throws Exception
     {
@@ -17,37 +24,21 @@ public class LevelReader implements LevelProvider
     
     public Level load(int number) throws Exception
     {
-        List<String> lines = readLines(number);
-        LevelBuilder builder = new LevelBuilder();
-        int index = 0;
-        String[] parts;
-        do
-        {
-            parts = lines.get(index++).split("=");
-            if (parts[0].equals("size"))
-                builder.mapSize = Point.parse(parts[1], "x");
-            else if (parts[0].equals("head"))
-                builder.snakeHead = Point.parse(parts[1], ",");
-            else if (parts[0].equals("direction"))
-                builder.snakeDirection = Direction.parse(parts[1]);
-            else if (parts[0].equals("target"))
-                builder.targetLength = Integer.parseInt(parts[1]);
-            else if (parts[0].equals("length"))
-                builder.snakeLength = Integer.parseInt(parts[1]);
-        } 
-        while (parts.length > 1);
-        builder.gameMap = parseMap(
-                builder.mapSize, 
-                lines.subList(index - 1, index + builder.mapSize.y)
-        ); 
-        builder.generators = parseGenerators(lines.subList(
-                index + builder.mapSize.y - 1, 
-                lines.size())
-        );
-        return builder.build();
+    	builder.clear();
+    	List<String> lines = readLines(number);
+    	int mapLineIndex = parseConfiguration(lines);
+    	builder.gameMap = parseMap(builder.mapSize, lines.subList(
+    			mapLineIndex, 
+    			mapLineIndex + builder.mapSize.y
+    	));
+    	builder.generators = parseGenerators(lines.subList(
+                mapLineIndex + builder.mapSize.y, 
+                lines.size()
+        ));
+    	return builder.build();
     }
     
-    private static List<String> readLines(int number) throws Exception
+    private List<String> readLines(int number) throws Exception
     {
         Path path = LEVELS_PATH.resolve(Integer.toString(number));
         if (Files.exists(path))
@@ -56,7 +47,37 @@ public class LevelReader implements LevelProvider
             throw new Exception("Wrong path to level \"" + path.toAbsolutePath().toString() + "\"");
     }
     
-    private static GameMap parseMap(Point size, List<String> lines)
+    private int parseConfiguration(List<String> lines) throws Exception
+    {
+    	int index = 0;
+    	String[] parts;
+        do
+        {
+            parts = lines.get(index++).split("=");
+            switch (parts[0])
+            {
+            	case "size":
+            		builder.mapSize = Point.parse(parts[1], "x");
+            		break;
+            	case "head":
+            		builder.snakeHead = Point.parse(parts[1], ",");
+            		break;
+            	case "direction":
+            		builder.snakeDirection = Direction.parse(parts[1]);
+            		break;
+            	case "target":
+            		builder.targetLength = Integer.parseInt(parts[1]);
+            		break;
+            	case "length":
+            		builder.snakeLength = Integer.parseInt(parts[1]);
+            		break;
+            }
+        } 
+        while (parts.length > 1);
+        return index - 1;
+    }
+    
+    private GameMap parseMap(Point size, List<String> lines)
     {
         final char wallSymbol = 'X';
         GameMap map = new GameMap(size.x, size.y);
@@ -68,8 +89,7 @@ public class LevelReader implements LevelProvider
         return map;
     }
     
-    private static HashMap<Class, MealGenerator> parseGenerators(List<String> lines) 
-        throws Exception
+    private HashMap<Class, MealGenerator> parseGenerators(List<String> lines) throws Exception
     {
         HashMap<Class, MealGenerator> generators = new HashMap<>();
         for (int index = 0; index < lines.size(); index++)
@@ -81,13 +101,21 @@ public class LevelReader implements LevelProvider
             for (String config : configs)
             {
                 String[] parts = config.split("=");
-                if (parts[0].equals("food"))
-                    type = Class.forName("snake." + parts[1]);
-                else if (parts[0].equals("timeout"))
-                    timeout = Integer.parseInt(parts[1]);
-                else if (parts[0].equals("count"))
-                    maxCount = Integer.parseInt(parts[1]);
+                switch (parts[0])
+                {
+                	case "food":
+                		type = Class.forName("snake." + parts[1]);
+                		break;
+                	case "timeout":
+                		timeout = Integer.parseInt(parts[1]);
+                		break;
+                	case "count":
+                		maxCount = Integer.parseInt(parts[1]);
+                		break;
+                }
             }
+            if (timeout == 0 || maxCount == 0 || type == null)
+            	throw new Exception("Wrong MealGenerator definition \"" + lines.get(index) + "\"");
             generators.put(type, new MealGenerator(type, timeout, maxCount));
         }
         return generators;

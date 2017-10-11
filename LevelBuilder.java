@@ -47,4 +47,17 @@ public class LevelBuilder
             generators
         );
     }
+    
+    public void clear()
+    {
+    	snakeDirection = null; 
+        snakeHead = null;
+        mapSize = null; 
+        
+        targetLength = 0;
+        snakeLength = 0;
+        
+        gameMap = null;
+        generators = null;
+    }
 }
