@@ -66,7 +66,7 @@ public class Game
         for (int index = 0; index < trace.length; index++)
         {
             if (trace[index].equals(head))
-                level.snake.adjustLength(-index);
+                level.snake.adjustLength(index - level.snake.getLength() + 1);
         }
     }
 }
