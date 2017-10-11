@@ -2,7 +2,7 @@ package snake;
 
 public class Game 
 {   
-	private int levelNumber;
+    private int levelNumber;
     private LevelProvider provider;
     
     public Level level;

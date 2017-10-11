@@ -15,14 +15,14 @@ public class CUI
             String command = readLine();
             if (!command.equals(""))
             {
-            	try
-	            {
-            		game.changeDirection(Direction.parse(command.toUpperCase()));           		
-	            }
-            	catch (Exception e)
-            	{
-            		System.out.println("Wrong command \"" + command + "\"");
-            	}
+                try
+                {
+                    game.changeDirection(Direction.parse(command.toUpperCase()));                   
+                }
+                catch (Exception e)
+                {
+                    System.out.println("Wrong command \"" + command + "\"");
+                }
             }
             game.tick();
         }

@@ -9,33 +9,33 @@ import java.util.List;
 public class LevelReader implements LevelProvider 
 {
     private static final Path LEVELS_PATH = Paths.get("bin", "snake", "levels");
-	
+    
     private LevelBuilder builder;
     
     public LevelReader()
     {
-    	builder = new LevelBuilder();
+        builder = new LevelBuilder();
     }
     
     public int getLevelsCount() throws Exception
     {
-    	return (int)Files.list(LEVELS_PATH).count();
+        return (int)Files.list(LEVELS_PATH).count();
     }
     
     public Level load(int number) throws Exception
     {
-    	builder.clear();
-    	List<String> lines = readLines(number);
-    	int mapLineIndex = parseConfiguration(lines);
-    	builder.gameMap = parseMap(builder.mapSize, lines.subList(
-    			mapLineIndex, 
-    			mapLineIndex + builder.mapSize.y
-    	));
-    	builder.generators = parseGenerators(lines.subList(
+        builder.clear();
+        List<String> lines = readLines(number);
+        int mapLineIndex = parseConfiguration(lines);
+        builder.gameMap = parseMap(builder.mapSize, lines.subList(
+                mapLineIndex, 
+                mapLineIndex + builder.mapSize.y
+        ));
+        builder.generators = parseGenerators(lines.subList(
                 mapLineIndex + builder.mapSize.y, 
                 lines.size()
         ));
-    	return builder.build();
+        return builder.build();
     }
     
     private List<String> readLines(int number) throws Exception
@@ -49,28 +49,28 @@ public class LevelReader implements LevelProvider
     
     private int parseConfiguration(List<String> lines) throws Exception
     {
-    	int index = 0;
-    	String[] parts;
+        int index = 0;
+        String[] parts;
         do
         {
             parts = lines.get(index++).split("=");
             switch (parts[0])
             {
-            	case "size":
-            		builder.mapSize = Point.parse(parts[1], "x");
-            		break;
-            	case "head":
-            		builder.snakeHead = Point.parse(parts[1], ",");
-            		break;
-            	case "direction":
-            		builder.snakeDirection = Direction.parse(parts[1]);
-            		break;
-            	case "target":
-            		builder.targetLength = Integer.parseInt(parts[1]);
-            		break;
-            	case "length":
-            		builder.snakeLength = Integer.parseInt(parts[1]);
-            		break;
+                case "size":
+                    builder.mapSize = Point.parse(parts[1], "x");
+                    break;
+                case "head":
+                    builder.snakeHead = Point.parse(parts[1], ",");
+                    break;
+                case "direction":
+                    builder.snakeDirection = Direction.parse(parts[1]);
+                    break;
+                case "target":
+                    builder.targetLength = Integer.parseInt(parts[1]);
+                    break;
+                case "length":
+                    builder.snakeLength = Integer.parseInt(parts[1]);
+                    break;
             }
         } 
         while (parts.length > 1);
@@ -103,19 +103,19 @@ public class LevelReader implements LevelProvider
                 String[] parts = config.split("=");
                 switch (parts[0])
                 {
-                	case "food":
-                		type = Class.forName("snake." + parts[1]);
-                		break;
-                	case "timeout":
-                		timeout = Integer.parseInt(parts[1]);
-                		break;
-                	case "count":
-                		maxCount = Integer.parseInt(parts[1]);
-                		break;
+                    case "food":
+                        type = Class.forName("snake." + parts[1]);
+                        break;
+                    case "timeout":
+                        timeout = Integer.parseInt(parts[1]);
+                        break;
+                    case "count":
+                        maxCount = Integer.parseInt(parts[1]);
+                        break;
                 }
             }
             if (timeout == 0 || maxCount == 0 || type == null)
-            	throw new Exception("Wrong MealGenerator definition \"" + lines.get(index) + "\"");
+                throw new Exception("Wrong MealGenerator definition \"" + lines.get(index) + "\"");
             generators.put(type, new MealGenerator(type, timeout, maxCount));
         }
         return generators;

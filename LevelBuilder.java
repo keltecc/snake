@@ -50,7 +50,7 @@ public class LevelBuilder
     
     public void clear()
     {
-    	snakeDirection = null; 
+        snakeDirection = null; 
         snakeHead = null;
         mapSize = null; 
         
