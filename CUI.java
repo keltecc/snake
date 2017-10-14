@@ -57,7 +57,7 @@ public class CUI
                 else if (food instanceof Cherry)
                     characters[y][x] = "C";
                 else if (food == null)
-                    characters[y][x] = map.getTerrain(x, y) ? "X" : ".";
+                    characters[y][x] = map.isTerrain(x, y) ? "X" : ".";
                 else
                     characters[y][x] = "?";
             }

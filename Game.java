@@ -52,7 +52,7 @@ public class Game
         Point[] trace = level.snake.getTrace();
         Point head = Point.getSum(trace[0], level.snake.direction);
         
-        if (level.map.getTerrain(head.x, head.y))
+        if (level.map.isTerrain(head.x, head.y))
             result = GameResult.LEVEL_FAILED;
         
         Food food = level.map.getFood(head.x, head.y);

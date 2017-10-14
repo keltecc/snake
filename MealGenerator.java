@@ -48,7 +48,7 @@ public class MealGenerator<F extends Food>
             location = new Point(random.nextInt(map.width()), random.nextInt(map.height()));
         }
         while (
-            map.getTerrain(location.x, location.y) ||
+            map.isTerrain(location.x, location.y) ||
             map.getFood(location.x, location.y) != null ||
             getDistanceToSnake(snake, location) < goodDistance
         );

@@ -1,4 +1,4 @@
-package tests;
+package snake.tests;
 
 import java.util.Random;
 import org.junit.Test;

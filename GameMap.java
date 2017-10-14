@@ -32,7 +32,7 @@ public class GameMap
         walls[x][y] = isWall;
     }
     
-    public boolean getTerrain(int x, int y) 
+    public boolean isTerrain(int x, int y) 
     {
         return walls[x][y];
     }
