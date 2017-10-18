@@ -49,10 +49,14 @@ public class Snake
         lengthQueue += length;
     }
     
-    public void makeStep()
+    public void makeStep(int mapWidth, int mapHeight)
     {
-        Point head = body.peekFirst().clone();
-        head.add(direction);
+        Point head = Point.getSumBounds(
+        		body.peekFirst().clone(), 
+        		direction, 
+        		mapWidth, 
+        		mapHeight
+        );
         body.addFirst(head);
         
         if (lengthQueue > 0)

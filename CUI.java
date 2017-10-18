@@ -9,7 +9,7 @@ public class CUI
     {
         Game game = new Game(new LevelReader());
         game.loadLevel(1);
-        while (game.result == GameResult.NONE)
+        while (game.level.state != LevelState.FAILED)
         {
             printView(renderView(game.level.map, game.level.snake));
             String command = readLine();
@@ -26,7 +26,7 @@ public class CUI
             }
             game.tick();
         }
-        System.out.println(game.result.toString());
+        System.out.println(game.level.state.toString());
     }
     
     private static String readLine()
@@ -51,13 +51,15 @@ public class CUI
             characters[y] = new String[map.width()];
             for (int x = 0; x < map.width(); x++)
             {
-                Food food = map.getFood(x, y);
-                if (food instanceof Apple)
+                MapObject object = map.getObject(x, y);
+                if (object instanceof Apple)
                     characters[y][x] = "A";
-                else if (food instanceof Cherry)
-                    characters[y][x] = "C";
-                else if (food == null)
-                    characters[y][x] = map.isTerrain(x, y) ? "X" : ".";
+                else if (object instanceof Wall)
+                    characters[y][x] = "X";
+                else if (object instanceof Portal)
+                	characters[y][x] = "P";
+                else if (object == null)
+                    characters[y][x] = ".";
                 else
                     characters[y][x] = "?";
             }

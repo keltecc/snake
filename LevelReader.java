@@ -1,10 +1,12 @@
 package snake;
 
 import java.nio.file.Path;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Function;
 
 public class LevelReader implements LevelProvider 
 {
@@ -30,10 +32,6 @@ public class LevelReader implements LevelProvider
         builder.gameMap = parseMap(builder.mapSize, lines.subList(
                 mapLineIndex, 
                 mapLineIndex + builder.mapSize.y
-        ));
-        builder.generators = parseGenerators(lines.subList(
-                mapLineIndex + builder.mapSize.y, 
-                lines.size()
         ));
         return builder.build();
     }
@@ -77,47 +75,31 @@ public class LevelReader implements LevelProvider
         return index - 1;
     }
     
-    private GameMap parseMap(Point size, List<String> lines)
+    private GameMap parseMap(Point size, List<String> lines) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException
     {
         final char wallSymbol = 'X';
         GameMap map = new GameMap(size.x, size.y);
         for (int x = 0; x < map.width(); x++)
         {
             for (int y = 0; y < map.height(); y++)
-                map.setTerrain(x, y, lines.get(y).charAt(x) == wallSymbol);
+            {
+            	Class object;
+            	switch (lines.get(y).charAt(x))
+            	{
+            		case 'X':
+            			object = Wall.class; break;
+            		case 'A':
+            			object = Apple.class; break;
+            		case 'P':
+                			object = Portal.class; break;
+            		default:
+            			object = null;
+            	}
+            	if (object == null)
+            		continue;
+            	map.setObject(x, y, (MapObject)object.getConstructors()[0].newInstance(new Point(x, y)));
+            }
         }
         return map;
-    }
-    
-    private HashMap<Class, MealGenerator> parseGenerators(List<String> lines) throws Exception
-    {
-        HashMap<Class, MealGenerator> generators = new HashMap<>();
-        for (int index = 0; index < lines.size(); index++)
-        {
-            String[] configs = lines.get(index).split(",");
-            Class type = null;
-            int timeout = 0;
-            int maxCount = 0;
-            for (String config : configs)
-            {
-                String[] parts = config.split("=");
-                switch (parts[0])
-                {
-                    case "food":
-                        type = Class.forName("snake." + parts[1]);
-                        break;
-                    case "timeout":
-                        timeout = Integer.parseInt(parts[1]);
-                        break;
-                    case "count":
-                        maxCount = Integer.parseInt(parts[1]);
-                        break;
-                }
-            }
-            if (timeout == 0 || maxCount == 0 || type == null)
-                throw new Exception("Wrong MealGenerator definition \"" + lines.get(index) + "\"");
-            generators.put(type, new MealGenerator(type, timeout, maxCount));
-        }
-        return generators;
     }
 }

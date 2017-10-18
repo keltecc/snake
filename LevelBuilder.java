@@ -12,7 +12,6 @@ public class LevelBuilder
     public int snakeLength;
     
     public GameMap gameMap;
-    public HashMap<Class, MealGenerator> generators;
     
     public LevelBuilder()
     {
@@ -24,7 +23,6 @@ public class LevelBuilder
         snakeLength = 0;
         
         gameMap = null;
-        generators = null;
     }
     
     public Level build() throws Exception
@@ -34,8 +32,7 @@ public class LevelBuilder
             mapSize == null || 
             targetLength == 0 ||
             snakeLength == 0 ||
-            gameMap == null ||
-            generators == null)
+            gameMap == null)
         {
             throw new Exception("Level parsing failed!");
         }
@@ -43,8 +40,7 @@ public class LevelBuilder
         return new Level(
             gameMap, 
             new Snake(snakeHead, snakeDirection, snakeLength), 
-            targetLength,
-            generators
+            targetLength
         );
     }
     
@@ -58,6 +54,5 @@ public class LevelBuilder
         snakeLength = 0;
         
         gameMap = null;
-        generators = null;
     }
 }

@@ -6,12 +6,10 @@ public class Game
     private LevelProvider provider;
     
     public Level level;
-    public GameResult result;
     
     public Game(LevelProvider provider)
     {
         level = null;
-        result = GameResult.NONE;
         this.provider = provider;
     }
     
@@ -25,20 +23,12 @@ public class Game
     {
         if (level == null)
             throw new Exception("No level!");
-
-        if (level.snake.getLength() == level.targetLength)
-        {
-            if (levelNumber < provider.getLevelsCount())
-                loadLevel(++levelNumber);
-            else
-                result = GameResult.GAME_COMPLETED;
-        }
         
         checkCollisions();
-        level.snake.makeStep();
-        
-        for (MealGenerator generator : level.generators.values())
-            generator.tick(level.map, level.snake);
+        if (level.state == LevelState.PLAYING)
+        	level.snake.makeStep(level.map.width(), level.map.height());
+        else if (level.state == LevelState.COMPLETED)
+        	level = provider.load(++levelNumber);
     }
     
     public void changeDirection(Point direction)
@@ -50,23 +40,19 @@ public class Game
     private void checkCollisions()
     {
         Point[] trace = level.snake.getTrace();
-        Point head = Point.getSum(trace[0], level.snake.direction);
+        Point expectedHead = Point.getSumBounds(trace[0], level.snake.direction, level.map.width(), level.map.height());
         
-        if (level.map.isTerrain(head.x, head.y))
-            result = GameResult.LEVEL_FAILED;
-        
-        Food food = level.map.getFood(head.x, head.y);
-        if (food != null)
-        {
-            level.snake.adjustLength(food.getCost());
-            level.generators.get(food.getClass()).decreaseCount();
-            level.map.setFood(head.x, head.y, null);
-        }
+        MapObject object = level.map.getObject(expectedHead.x, expectedHead.y);
+        if (object != null)
+        	object.interact(level);
         
         for (int index = 0; index < trace.length; index++)
         {
-            if (trace[index].equals(head))
+            if (trace[index].equals(expectedHead))
                 level.snake.adjustLength(index - level.snake.getLength() + 1);
         }
+        
+        if (level.snake.getLength() == level.targetLength)
+        	level.state = LevelState.COMPLETED;
     }
 }

@@ -1,21 +1,18 @@
 package snake;
 
-import java.util.HashMap;
-
 public class Level 
 {
-    public int targetLength;
-    public Snake snake;
-    public GameMap map;
+	public LevelState state;
+	public int targetLength;
+	public GameMap map;
+	public Snake snake;
     
-    public HashMap<Class, MealGenerator> generators;
-    
-    public Level(GameMap map, Snake snake, int target, HashMap<Class, MealGenerator> generators)
+    public Level(GameMap map, Snake snake, int target)
     {
         this.map = map;
         this.snake = snake;
         this.targetLength = target;
         
-        this.generators = generators;
+        state = LevelState.PLAYING;
     }
 }

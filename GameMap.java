@@ -2,48 +2,35 @@ package snake;
 
 public class GameMap 
 {
-    private Food[][] meal;
-    private boolean[][] walls;
+    private MapObject[][] objects;
     
     public GameMap(int width, int height)
     {
-        meal = new Food[width][];
-        walls = new boolean[width][];
+        objects = new MapObject[width][];
         
         for (int x = 0; x < width; x++)
         {
-            meal[x] = new Food[height];
-            walls[x] = new boolean[height];
+            objects[x] = new MapObject[height];
         }
     }
        
     public int width()
     {
-        return walls.length;
+        return objects.length;
     }
     
     public int height()
     {
-        return walls.length > 0 ? walls[0].length : 0;
+        return objects.length > 0 ? objects[0].length : 0;
     }
     
-    public void setTerrain(int x, int y, boolean isWall)
+    public void setObject(int x, int y, MapObject object)
     {
-        walls[x][y] = isWall;
+        objects[x][y] = object;
     }
     
-    public boolean isTerrain(int x, int y) 
+    public MapObject getObject(int x, int y) 
     {
-        return walls[x][y];
-    }
-    
-    public void setFood(int x, int y, Food food)
-    {
-        meal[x][y] = food;
-    }
-    
-    public Food getFood(int x, int y)
-    {
-        return meal[x][y];
+        return objects[x][y];
     }
 }

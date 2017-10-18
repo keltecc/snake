@@ -66,6 +66,11 @@ public class Point
         return new Point(p1.x + p2.x,p1.y + p2.y);
     }
     
+    public static Point getSumBounds(Point p1, Point p2, int boundX, int boundY)
+    {
+        return new Point((boundX + p1.x + p2.x) % boundX, (boundY + p1.y + p2.y) % boundY);
+    }
+    
     public static Point getMultiplication(Point point, int value)
     {
         return new Point(point.x * value, point.y * value);
