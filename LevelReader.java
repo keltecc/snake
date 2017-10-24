@@ -4,9 +4,7 @@ import java.nio.file.Path;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
-import java.util.function.Function;
 
 public class LevelReader implements LevelProvider 
 {
@@ -24,10 +22,10 @@ public class LevelReader implements LevelProvider
         return (int)Files.list(LEVELS_PATH).count();
     }
     
-    public Level load(int number) throws Exception
+    public Level load(int levelNumber) throws Exception
     {
         builder.clear();
-        List<String> lines = readLines(number);
+        List<String> lines = readLines(levelNumber);
         int mapLineIndex = parseConfiguration(lines);
         builder.gameMap = parseMap(builder.mapSize, lines.subList(
                 mapLineIndex, 
@@ -36,9 +34,9 @@ public class LevelReader implements LevelProvider
         return builder.build();
     }
     
-    private List<String> readLines(int number) throws Exception
+    private List<String> readLines(int levelNumber) throws Exception
     {
-        Path path = LEVELS_PATH.resolve(Integer.toString(number));
+        Path path = LEVELS_PATH.resolve(Integer.toString(levelNumber));
         if (Files.exists(path))
             return Files.readAllLines(path);
         else
@@ -75,29 +73,37 @@ public class LevelReader implements LevelProvider
         return index - 1;
     }
     
-    private GameMap parseMap(Point size, List<String> lines) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException
+    private GameMap parseMap(Point size, List<String> lines)
+    		throws InstantiationException,
+    			   IllegalAccessException,
+    			   IllegalArgumentException,
+    			   InvocationTargetException,
+    			   SecurityException
     {
-        final char wallSymbol = 'X';
         GameMap map = new GameMap(size.x, size.y);
         for (int x = 0; x < map.width(); x++)
         {
             for (int y = 0; y < map.height(); y++)
             {
-            	Class object;
+            	MapObject object;
+            	Point point = new Point(x, y);
             	switch (lines.get(y).charAt(x))
             	{
             		case 'X':
-            			object = Wall.class; break;
+            			object = new Wall(point);//Wall.class;
+            			break;
             		case 'A':
-            			object = Apple.class; break;
+            			object = new Apple(point);//Apple.class;
+            			break;
             		case 'P':
-                			object = Portal.class; break;
+                		object = new Portal(point);//Portal.class;
+                		break;
             		default:
             			object = null;
             	}
             	if (object == null)
             		continue;
-            	map.setObject(x, y, (MapObject)object.getConstructors()[0].newInstance(new Point(x, y)));
+            	map.setObject(x, y, object);//(MapObject)object.getConstructors()[0].newInstance(new Point(x, y)));
             }
         }
         return map;

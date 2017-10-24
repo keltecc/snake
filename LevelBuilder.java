@@ -1,7 +1,5 @@
 package snake;
 
-import java.util.HashMap;
-
 public class LevelBuilder 
 {
     public Point snakeDirection;
