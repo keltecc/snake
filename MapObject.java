@@ -11,6 +11,11 @@ public abstract class MapObject
 		setPosition(position);
 	}
 	
+	public MapObject(int x, int y)
+	{
+		setPosition(new Point(x, y));
+	}
+	
 	public Point getPosition()
 	{
 		return position.clone();

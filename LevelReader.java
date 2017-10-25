@@ -85,7 +85,7 @@ public class LevelReader implements LevelProvider
         {
             for (int y = 0; y < map.height(); y++)
             {
-            	MapObject object;
+            	MapObject object;//Class object;
             	Point point = new Point(x, y);
             	switch (lines.get(y).charAt(x))
             	{

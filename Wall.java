@@ -6,6 +6,11 @@ public class Wall extends MapObject
 	{
 		super(position);
 	}
+	
+	public Wall(int x, int y)
+	{
+		super (x, y);
+	}
 
 	@Override
 	public void interact(Level level)

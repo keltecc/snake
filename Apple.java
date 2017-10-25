@@ -8,6 +8,11 @@ public class Apple extends MapObject
 	{
 		super(position);
 	}
+	
+	public Apple(int x, int y)
+	{
+		super(x, y);
+	}
 
 	public void interact(Level level)
 	{
@@ -19,7 +24,6 @@ public class Apple extends MapObject
 			{					
 				level.map.setObject(point.x, point.y, new Apple(point));
 			}
-			catch (Exception ex) {}
 			finally
 			{
 				level.map.setObject(this.getPosition().x, this.getPosition().y, null);

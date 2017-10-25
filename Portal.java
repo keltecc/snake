@@ -9,6 +9,12 @@ public class Portal extends MapObject
 		super(position);
 		destination = null;
 	}
+	
+	public Portal(int x, int y)
+	{
+		super(x, y);
+		destination = null;
+	}
 
 	public void interact(Level level)
 	{
