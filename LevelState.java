@@ -2,8 +2,8 @@ package snake;
 
 public enum LevelState 
 {
-	NONE,
-	FAILED,
-	PLAYING,
-	COMPLETED
+    NONE,
+    FAILED,
+    PLAYING,
+    COMPLETED
 }

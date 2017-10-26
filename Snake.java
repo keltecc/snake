@@ -52,10 +52,10 @@ public class Snake
     public void makeStep(int mapWidth, int mapHeight)
     {
         Point head = Point.getSumBounds(
-        		body.peekFirst().clone(), 
-        		direction, 
-        		mapWidth, 
-        		mapHeight
+                body.peekFirst().clone(), 
+                direction, 
+                mapWidth, 
+                mapHeight
         );
         body.addFirst(head);
         

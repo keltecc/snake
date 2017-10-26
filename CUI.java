@@ -57,7 +57,7 @@ public class CUI
                 else if (object instanceof Wall)
                     characters[y][x] = "X";
                 else if (object instanceof Portal)
-                	characters[y][x] = "P";
+                    characters[y][x] = "P";
                 else if (object == null)
                     characters[y][x] = ".";
                 else

@@ -26,9 +26,9 @@ public class Game
         
         checkCollisions();
         if (level.state == LevelState.PLAYING)
-        	level.snake.makeStep(level.map.width(), level.map.height());
+            level.snake.makeStep(level.map.width(), level.map.height());
         else if (level.state == LevelState.COMPLETED)
-        	level = provider.load(++levelNumber);
+            level = provider.load(++levelNumber);
     }
     
     public void changeDirection(Point direction)
@@ -44,7 +44,7 @@ public class Game
         
         MapObject object = level.map.getObject(expectedHead.x, expectedHead.y);
         if (object != null)
-        	object.interact(level);
+            object.interact(level);
         
         for (int index = 0; index < trace.length; index++)
         {
@@ -53,6 +53,6 @@ public class Game
         }
         
         if (level.snake.getLength() == level.targetLength)
-        	level.state = LevelState.COMPLETED;
+            level.state = LevelState.COMPLETED;
     }
 }

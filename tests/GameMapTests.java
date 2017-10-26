@@ -13,8 +13,8 @@ public class GameMapTests
    @Test
    public void testSize()
    {
-	   setSize(0,0);
-	   setSize(1000, 12);
+       setSize(0,0);
+       setSize(1000, 12);
    }
    
    public void setSize(int width, int height) 
@@ -27,12 +27,12 @@ public class GameMapTests
    @Test
    public void testGetSet()
    {
-	   GameMap map = new GameMap(7, 7);
-	   for (int x = 0; x < map.width(); x++)
+       GameMap map = new GameMap(7, 7);
+       for (int x = 0; x < map.width(); x++)
        {
           for (int y = 0; y < map.height(); y++)
           {
-        	 Assert.assertNull(map.getObject(x, y));
+             Assert.assertNull(map.getObject(x, y));
              map.setObject(x, y, new Wall(x, y));
              Assert.assertTrue(map.getObject(x, y) instanceof Wall);
              map.setObject(x, y, null);

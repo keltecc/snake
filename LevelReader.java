@@ -1,14 +1,13 @@
 package snake;
 
 import java.nio.file.Path;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
 public class LevelReader implements LevelProvider 
 {
-    private static final Path LEVELS_PATH = Paths.get("bin", "snake", "levels");
+    private static final Path LEVELS_PATH = Paths.get("bin", "levels");
     
     private LevelBuilder builder;
     
@@ -73,37 +72,32 @@ public class LevelReader implements LevelProvider
         return index - 1;
     }
     
-    private GameMap parseMap(Point size, List<String> lines)
-    		throws InstantiationException,
-    			   IllegalAccessException,
-    			   IllegalArgumentException,
-    			   InvocationTargetException,
-    			   SecurityException
+    private GameMap parseMap(Point size, List<String> lines) throws Exception
     {
         GameMap map = new GameMap(size.x, size.y);
         for (int x = 0; x < map.width(); x++)
         {
             for (int y = 0; y < map.height(); y++)
             {
-            	MapObject object;//Class object;
-            	Point point = new Point(x, y);
-            	switch (lines.get(y).charAt(x))
-            	{
-            		case 'X':
-            			object = new Wall(point);//Wall.class;
-            			break;
-            		case 'A':
-            			object = new Apple(point);//Apple.class;
-            			break;
-            		case 'P':
-                		object = new Portal(point);//Portal.class;
-                		break;
-            		default:
-            			object = null;
-            	}
-            	if (object == null)
-            		continue;
-            	map.setObject(x, y, object);//(MapObject)object.getConstructors()[0].newInstance(new Point(x, y)));
+                MapObject object;//Class object;
+                Point point = new Point(x, y);
+                switch (lines.get(y).charAt(x))
+                {
+                    case 'X':
+                        object = new Wall(point);//Wall.class;
+                        break;
+                    case 'A':
+                        object = new Apple(point);//Apple.class;
+                        break;
+                    case 'P':
+                        object = new Portal(point);//Portal.class;
+                        break;
+                    default:
+                        object = null;
+                }
+                if (object == null)
+                    continue;
+                map.setObject(x, y, object);//(MapObject)object.getConstructors()[0].newInstance(new Point(x, y)));
             }
         }
         return map;
