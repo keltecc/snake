@@ -1,0 +1,5 @@
+10x10 10 1000
+SnakePart 2,0 LEFT-1-DOWN-5
+Apple 5,5
+Wall 9,1;9,3;9,5;9,7;9,9
+2,0 RIGHT
