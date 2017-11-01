@@ -1,5 +1,8 @@
-10x10 10 1000
-SnakePart 2,0 LEFT-1-DOWN-5
+20x10 10 1
+SnakePart 2,0 LEFT-1-DOWN-2
 Apple 5,5
-Wall 9,1;9,3;9,5;9,7;9,9
+Portal 15,3 4,8
+QuickSand 7,9
+Wall 9,0;9,1;9,2;9,3;9,4;9,5;9,6;9,7;9,8;9,9
+Opener 6,4 9,0;9,1;9,2;9,3;9,4;9,5;9,6;9,7;9,8;9,9
 2,0 RIGHT
