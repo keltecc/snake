@@ -7,7 +7,6 @@ public class Snake
 	private SnakePart tail;
 	private int lengthQueue;
 	private Vector direction;
-	private Vector previous;
 	
 	public Snake(SnakePart head, Vector direction)
 	{
@@ -20,7 +19,6 @@ public class Snake
 			tail = tail.next;
 			length++;
 		}
-		previous = head.getLocation();
 	}
 	
 	public SnakePart getHead()
@@ -61,9 +59,9 @@ public class Snake
 	
 	public void makeStep()
 	{
+		Vector previous = head.getLocation().clone();
+		head.changeLocation(direction);
 		SnakePart part = head;
-		if (Vector.getDistance(previous, part.next.getLocation()) < 2)
-			part.changeLocation(direction);
 		for (int i = 1; i < length; i++)
 		{
 			if (part.next == null)
@@ -77,7 +75,6 @@ public class Snake
 			previous = location;
 			part = part.next;
 		}
-		previous = head.getLocation();
 		expandTail(part);
 	}
 	

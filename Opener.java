@@ -21,7 +21,7 @@ public class Opener extends MapObject
 			objects.add(game.level.map.get(wall));
 			game.level.map.set(wall, null);
 		}
-		game.addEffect(new Effect(
+		game.level.addEffect(new Effect(
 				null, game -> {
 					if (game.level.map.get(getLocation()) == null)
 						game.level.map.set(getLocation(), this);

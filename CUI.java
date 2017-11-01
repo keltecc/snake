@@ -17,14 +17,15 @@ public class CUI
             {
                 try
                 {
-                    game.changeDirection(Direction.parse(command));                   
+                    game.level.changeDirection(Direction.parse(command));
                 }
                 catch (Exception e)
                 {
                     System.out.println("Wrong command \"" + command + "\"");
                 }
             }
-            game.tick();
+            game.level.tick();
+            game.checkState();
         }
         System.out.println(game.state.toString());
     }
@@ -56,15 +57,15 @@ public class CUI
                 if (object instanceof Apple)
                     characters[y][x] = "A";
                 else if (object instanceof Wall)
-                    characters[y][x] = "■";
+                    characters[y][x] = "♦";
                 else if (object instanceof SnakePart)
                 	characters[y][x] = "•";
                 else if (object instanceof QuickSand)
-                    characters[y][x] = "=";
+                    characters[y][x] = "#";
                 else if (object instanceof Portal)
                     characters[y][x] = "@";
                 else if (object instanceof Opener)
-                    characters[y][x] = "#";
+                    characters[y][x] = "○";
                 else if (object == null)
                     characters[y][x] = " ";
                 else

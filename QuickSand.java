@@ -10,7 +10,7 @@ public class QuickSand extends MapObject
 	@Override
 	public void interact()
 	{
-		game.addEffect(new Effect(
+		game.level.addEffect(new Effect(
 				game -> {game.level.timeout *= 2; delete();},
 				null,
 				game -> {

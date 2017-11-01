@@ -47,9 +47,9 @@ public class LevelLoader
         return Files.readAllLines(path);
     }
     
-    private LevelInfo buildConfiguration(String line) 
+    private Level buildConfiguration(String line) 
     {
-    	LevelInfo level = new LevelInfo();
+    	Level level = new Level();
     	String[] parts = line.split(" ");
     	Vector size = Vector.parse(parts[0], "x");
     	level.map = new GameMap(size.x, size.y);
