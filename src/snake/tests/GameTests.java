@@ -27,11 +27,8 @@ public class GameTests
         Level level = buildLevel(1);
         (new Wall(level, new Vector(0, 0))).setRevealDelay(4);
         
-        level.tick();
-        level.tick();
-        level.tick();
-        level.tick();
-        level.tick();
+        for (int i = 0; i < 5; i++)
+            level.tick();
         
         assertTrue(level.map.get(new Vector(0, 0)) instanceof Wall);
     }

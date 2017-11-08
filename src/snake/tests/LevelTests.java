@@ -23,9 +23,8 @@ public class LevelTests
         Level level = buildLevel();
         level.addEffect(new Effect(lvl -> lvl.state = LevelState.FAILED, 2, level));
         
-        level.tick();
-        level.tick();
-        level.tick();
+        for (int i = 0; i < 3; i++)
+            level.tick();
         
         assertEquals(level.state, LevelState.FAILED);
     }
@@ -36,10 +35,8 @@ public class LevelTests
         Level level = buildLevel();
         level.timeout = 4;
         
-        level.tick();
-        level.tick();
-        level.tick();
-        level.tick();
+        for (int i = 0; i < 4; i++)
+            level.tick();
         
         assertEquals(level.snake.getHeadLocation(), new Vector(1, 0));
     }

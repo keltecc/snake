@@ -32,9 +32,8 @@ public class AppleTests
     {
         Level level = buildLevel();
         
-        level.tick();
-        level.tick();
-        level.tick();
+        for (int i = 0; i < 3; i++)
+            level.tick();
         
         boolean found = false;
         for (int x = 0; x < level.map.getSize().x; x++)

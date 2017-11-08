@@ -32,10 +32,8 @@ public class OracleTests
     {
         Level level = buildLevel(1);
         
-        level.tick();
-        level.tick();
-        level.tick();
-        level.tick();
+        for (int i = 0; i < 4; i++)
+            level.tick();
         
         assertNull(level.map.get(new Vector(1, 1)));
         assertNull(level.map.get(new Vector(2, 1)));
@@ -46,11 +44,8 @@ public class OracleTests
     {
         Level level = buildLevel(1);
         
-        level.tick();
-        level.tick();
-        level.tick();
-        level.tick();
-        level.tick();
+        for (int i = 0; i < 5; i++)
+            level.tick();
         
         assertTrue(level.map.get(new Vector(2, 0)) instanceof Wall);
         assertTrue(level.map.get(new Vector(3, 0)) instanceof Wall);
