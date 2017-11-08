@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 public class Snake 
 {    
-	private LinkedList<Vector> body;
+    private LinkedList<Vector> body;
     private Vector direction;
     private Vector mapSize;
     private int lengthQueue;
@@ -26,29 +26,29 @@ public class Snake
     
     public Vector getDirection()
     {
-    	return direction.clone();
+        return direction.clone();
     }
     
     public void setDirection(Vector direction)
     {
-    	if (Vector.getScalarProduct(this.direction, direction) == 0)
-    		this.direction = direction.clone();
+        if (Vector.getScalarProduct(this.direction, direction) == 0)
+            this.direction = direction.clone();
     }
     
     public Vector getNextLocation()
     {
-    	return body.peekFirst().add(direction).bound(mapSize);
+        return body.peekFirst().add(direction).bound(mapSize);
     }
     
     public Vector getHeadLocation()
     {
-    	return body.peekFirst().clone();
+        return body.peekFirst().clone();
     }
     
     public void setHeadLocation(Vector location)
     {
-    	body.removeFirst();
-    	body.addFirst(location.bound(mapSize));
+        body.removeFirst();
+        body.addFirst(location.bound(mapSize));
     }
     
     public Vector[] getTrace()

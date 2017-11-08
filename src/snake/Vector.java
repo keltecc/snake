@@ -14,7 +14,7 @@ public class Vector
     @Override
     public String toString()
     {
-    	return "(" + x + ", " + y + ")";
+        return "(" + x + ", " + y + ")";
     }
     
     @Override
@@ -49,7 +49,7 @@ public class Vector
     
     public Vector bound(Vector vector)
     {
-    	return new Vector((vector.x + this.x) % vector.x, (vector.y + this.y) % vector.y);
+        return new Vector((vector.x + this.x) % vector.x, (vector.y + this.y) % vector.y);
     }
     
     public static int getScalarProduct(Vector v1, Vector v2)

@@ -11,22 +11,22 @@ public class CUI
         int levelNumber = 1;
         while (true)
         {
-        	Level level = loader.load(levelNumber);
-        	if (level == null)
-        		break;
-        	while (level.state == LevelState.PLAYING)
-        	{        		
-        		printView(renderView(level));
-        		String line = readLine();
-        		Vector direction = Direction.parse(line);
-        		if (!direction.equals(Direction.NONE))
-        			level.snake.setDirection(direction);
-        		level.tick();
-        	}
-        	if (level.state == LevelState.COMPLETED)
-        		levelNumber++;
-        	else if (level.state == LevelState.FAILED)
-        		System.out.println("Level failed!");
+            Level level = loader.load(levelNumber);
+            if (level == null)
+                break;
+            while (level.state == LevelState.PLAYING)
+            {                
+                printView(renderView(level));
+                String line = readLine();
+                Vector direction = Direction.parse(line);
+                if (!direction.equals(Direction.NONE))
+                    level.snake.setDirection(direction);
+                level.tick();
+            }
+            if (level.state == LevelState.COMPLETED)
+                levelNumber++;
+            else if (level.state == LevelState.FAILED)
+                System.out.println("Level failed!");
         }
         System.out.println("Game completed!");
     }
@@ -47,7 +47,7 @@ public class CUI
     
     private static String[][] renderView(Level level)
     {
-    	Vector size = level.map.getSize();
+        Vector size = level.map.getSize();
         String[][] characters = new String[size.y][];
         for (int y = 0; y < size.y; y++)
         {
@@ -60,13 +60,13 @@ public class CUI
                 else if (object instanceof Wall)
                     characters[y][x] = "X";
                 else if (object instanceof Mushroom)
-                	characters[y][x] = "M";
+                    characters[y][x] = "M";
                 else if (object instanceof Gum)
-                	characters[y][x] = "G";
+                    characters[y][x] = "G";
                 else if (object instanceof Oracle)
-                	characters[y][x] = "@";
+                    characters[y][x] = "@";
                 else if (object instanceof Portal)
-                	characters[y][x] = ((Portal)object).in ? "I" : "O";
+                    characters[y][x] = ((Portal)object).in ? "I" : "O";
                 else if (object == null)
                     characters[y][x] = " ";
                 else
@@ -74,7 +74,7 @@ public class CUI
             }
         }
         for (Vector part : level.snake.getTrace())
-        	characters[part.y][part.x] = "S";
+            characters[part.y][part.x] = "S";
         return characters;
     }
     
