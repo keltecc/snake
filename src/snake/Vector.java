@@ -11,14 +11,18 @@ public class Vector
         this.y = y;
     }
     
-    public static Vector zero = new Vector(0, 0);
+    @Override
+    public String toString()
+    {
+    	return "(" + x + ", " + y + ")";
+    }
     
     @Override
-    public boolean equals(Object vector)
+    public boolean equals(Object obj)
     {
-        return vector instanceof Vector 
-                && x == ((Vector)vector).x 
-                && y == ((Vector)vector).y;
+        return obj instanceof Vector 
+                && x == ((Vector)obj).x 
+                && y == ((Vector)obj).y;
     }
     
     @Override

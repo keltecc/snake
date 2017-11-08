@@ -19,9 +19,4 @@ public class Direction
 			return Direction.NONE;
 		}
 	}
-	
-	public static Vector calculate(Vector from, Vector to)
-	{
-		return new Vector(to.x - from.x, to.y - from.y);
-	}
 }

@@ -7,27 +7,28 @@ public class CUI
 {
     public static void main(String[] args) throws Exception
     {
-        Game game = new Game();
-        game.loadLevel(1);
-        while (game.state != GameState.FAILED)
+        LevelLoader loader = new LevelLoader();
+        int levelNumber = 1;
+        while (true)
         {
-            printView(renderView(game.level.map, game.level.snake));
-            String command = readLine();
-            if (!command.equals(""))
-            {
-                try
-                {
-                    game.level.changeDirection(Direction.parse(command));
-                }
-                catch (Exception e)
-                {
-                    System.out.println("Wrong command \"" + command + "\"");
-                }
-            }
-            game.level.tick();
-            game.checkState();
+        	Level level = loader.load(levelNumber);
+        	if (level == null)
+        		break;
+        	while (level.state == LevelState.PLAYING)
+        	{        		
+        		printView(renderView(level));
+        		String line = readLine();
+        		Vector direction = Direction.parse(line);
+        		if (!direction.equals(Direction.NONE))
+        			level.snake.setDirection(direction);
+        		level.tick();
+        	}
+        	if (level.state == LevelState.COMPLETED)
+        		levelNumber++;
+        	else if (level.state == LevelState.FAILED)
+        		System.out.println("Level failed!");
         }
-        System.out.println(game.state.toString());
+        System.out.println("Game completed!");
     }
     
     private static String readLine()
@@ -44,34 +45,36 @@ public class CUI
         }
     }
     
-    private static String[][] renderView(GameMap map, Snake snake)
+    private static String[][] renderView(Level level)
     {
-    	Vector size = map.getSize();
+    	Vector size = level.map.getSize();
         String[][] characters = new String[size.y][];
         for (int y = 0; y < size.y; y++)
         {
             characters[y] = new String[size.x];
             for (int x = 0; x < size.x; x++)
             {
-                MapObject object = map.get(new Vector(x, y));
+                MapObject object = level.map.get(new Vector(x, y));
                 if (object instanceof Apple)
                     characters[y][x] = "A";
                 else if (object instanceof Wall)
-                    characters[y][x] = "♦";
-                else if (object instanceof SnakePart)
-                	characters[y][x] = "•";
-                else if (object instanceof QuickSand)
-                    characters[y][x] = "#";
+                    characters[y][x] = "X";
+                else if (object instanceof Mushroom)
+                	characters[y][x] = "M";
+                else if (object instanceof Gum)
+                	characters[y][x] = "G";
+                else if (object instanceof Oracle)
+                	characters[y][x] = "@";
                 else if (object instanceof Portal)
-                    characters[y][x] = "@";
-                else if (object instanceof Opener)
-                    characters[y][x] = "○";
+                	characters[y][x] = ((Portal)object).in ? "I" : "O";
                 else if (object == null)
                     characters[y][x] = " ";
                 else
                     characters[y][x] = "?";
             }
         }
+        for (Vector part : level.snake.getTrace())
+        	characters[part.y][part.x] = "S";
         return characters;
     }
     

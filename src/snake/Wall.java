@@ -2,14 +2,14 @@ package snake;
 
 public class Wall extends MapObject
 {
-	public Wall(Game game, Vector location) 
+	public Wall(Level level, Vector location) 
 	{
-		super(game, location);
+		super(level, location);
 	}
 
 	@Override	
 	public void interact()
 	{
-		game.state = GameState.FAILED;
+		level.state = LevelState.FAILED;
 	}
 }
