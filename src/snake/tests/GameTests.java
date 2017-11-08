@@ -31,6 +31,7 @@ public class GameTests
         level.tick();
         level.tick();
         level.tick();
+        level.tick();
         
         assertTrue(level.map.get(new Vector(0, 0)) instanceof Wall);
     }

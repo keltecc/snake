@@ -35,6 +35,7 @@ public class OracleTests
         level.tick();
         level.tick();
         level.tick();
+        level.tick();
         
         assertNull(level.map.get(new Vector(1, 1)));
         assertNull(level.map.get(new Vector(2, 1)));
@@ -49,9 +50,10 @@ public class OracleTests
         level.tick();
         level.tick();
         level.tick();
+        level.tick();
         
-        assertTrue(level.map.get(new Vector(1, 1)) instanceof Wall);
-        assertTrue(level.map.get(new Vector(2, 1)) instanceof Wall);
+        assertTrue(level.map.get(new Vector(2, 0)) instanceof Wall);
+        assertTrue(level.map.get(new Vector(3, 0)) instanceof Wall);
     }
     
     private Level buildLevel(int snakeLength)

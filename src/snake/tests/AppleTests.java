@@ -22,6 +22,7 @@ public class AppleTests
         Level level = buildLevel();
         
         level.tick();
+        level.tick();
         
         assertEquals(level.snake.getLength(), 2);
     }
@@ -31,6 +32,8 @@ public class AppleTests
     {
         Level level = buildLevel();
         
+        level.tick();
+        level.tick();
         level.tick();
         
         boolean found = false;
